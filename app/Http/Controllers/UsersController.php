@@ -22,7 +22,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
 
-        //用户信息验证
+        //表单信息验证
         $this->validate($request,[
             'name'  =>  'required|max:50',
             'email' =>  'required|email|unique:users|max:255',
