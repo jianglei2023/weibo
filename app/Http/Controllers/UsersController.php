@@ -7,6 +7,18 @@ use App\Models\User;
 use Auth;
 class UsersController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth',[
+            'except'  => ['show','create','store']
+        ]);
+
+        $this->middleware('guest',[
+            'only' =>['create']
+        ]);
+    }
+
     //注册页面
     public function create()
     {
@@ -49,6 +61,7 @@ class UsersController extends Controller
     //编辑用户
     public function edit(User $user)
     {
+        $this->authorize('update',$user);
         return view('users.edit',compact('user'));
     }
 
@@ -60,6 +73,8 @@ class UsersController extends Controller
     */
     public function update(User $user,Request $request)
     {
+        //授权策略 判断更新的是否是当前登录用户
+        $this->authorize('update',$user);
 
         //表单信息验证
         $this->validate($request,[
