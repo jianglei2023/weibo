@@ -21,13 +21,25 @@ class UsersController extends Controller
     //表单验证
     public function store(Request $request)
     {
+
+        //用户信息验证
         $this->validate($request,[
             'name'  =>  'required|max:50',
             'email' =>  'required|email|unique:users|max:255',
-            'password'  =>  'required|confirmed|mix:6'
+            'password'  =>  'required|confirmed|min:6'
         ]);
 
-        return;
+        //创建用户
+        $user = User::create([
+            'name'  => $request->name,
+            'email' => $request->email,
+            'password'=>bcrypt($request->password),
+        ]);
+
+        //闪存信息
+        session()->flash('success','欢迎注册!');
+        //重定向
+        return redirect()->route('users.show',[$user]);
     }
 
 
