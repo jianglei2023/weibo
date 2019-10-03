@@ -18,17 +18,17 @@ class UsersController extends Controller
         return view('users.show',compact('user'));
     }
 
+    //表单验证
     public function store(Request $request)
     {
         $this->validate($request,[
             'name'  =>  'required|max:50',
             'email' =>  'required|email|unique:users|max:255',
-            'password'  =>  'request|confirmed|mix:6'
+            'password'  =>  'required|confirmed|mix:6'
         ]);
 
         return;
     }
-
 
 
 }
