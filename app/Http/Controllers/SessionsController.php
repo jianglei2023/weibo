@@ -41,6 +41,14 @@ class SessionsController extends Controller
 
     }
 
+    //用户退出
+    public function destory()
+    {
+        Auth::logout();
+        session()->flash('success','您已退出!');
+        return redirect('login');
+    }
+
 
 
 }
