@@ -18,7 +18,7 @@ class UsersController extends Controller
         return view('users.show',compact('user'));
     }
 
-    //表单验证
+    //用户注册
     public function store(Request $request)
     {
 
@@ -35,6 +35,9 @@ class UsersController extends Controller
             'email' => $request->email,
             'password'=>bcrypt($request->password),
         ]);
+
+        //直接登录
+        Auth::login($user);
 
         //闪存信息
         session()->flash('success','欢迎注册!');
