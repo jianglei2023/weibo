@@ -26,7 +26,7 @@ class SessionsController extends Controller
         ]);
 
         //用户认证
-        if (Auth::attempt($rcedentials)) {
+        if (Auth::attempt($rcedentials,$request->has('remeber'))) {
 
             session()->flash('success','欢迎回来!');
             return redirect()->route('users.show',[Auth::user()]);
