@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Mail;
 
 class SessionsController extends Controller
 {
@@ -38,10 +39,21 @@ class SessionsController extends Controller
         //用户认证
         if (Auth::attempt($rcedentials,$request->has('remeber'))) {
 
-            session()->flash('success','欢迎回来!');
+            //验证用户是否激活
+            if (Auth::user()->activated) {
 
-            $fallback = route('users.show',[Auth::user()]);
-            return redirect()-> intended($fallback);
+                session()->flash('success','欢迎回来!');
+                $fallback = route('users.show',[Auth::user()]);
+                return redirect()-> intended($fallback);
+
+            }else{
+
+                Auth::logout();
+                session()->flash('warning','账户未激活，请激活!');
+                return redirect('/');
+
+            }
+
 
         }else{
 
@@ -60,6 +72,7 @@ class SessionsController extends Controller
         session()->flash('success','您已退出!');
         return redirect('login');
     }
+
 
 
 
