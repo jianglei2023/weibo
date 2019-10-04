@@ -30,6 +30,11 @@ class User extends Authenticatable
     ];
 
 
+    //一对多关系 一个用户对应多条微博
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
+    }
     //事件监听
     //用户注册前生成激活码
     public static function boot()
