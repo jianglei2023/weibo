@@ -21,6 +21,21 @@ class UsersController extends Controller
         ]);
     }
 
+    //粉丝列表
+    public function followers()
+    {
+        return $this->belongsToMany(User::class,'followers','user_id','follower_id');
+    }
+
+    //关注人列表
+    public function followings()
+    {
+        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+    }
+
+
+
+    //显示用户列表
     public function index()
     {
         $users = User::paginate(10);
