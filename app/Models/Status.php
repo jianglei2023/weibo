@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
+    protected $fillable = ['content'];
     //一对多关系 一个用户对应多条微博，一条微博对应一个用户
     public function user()
     {
